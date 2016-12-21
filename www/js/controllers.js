@@ -187,7 +187,7 @@ $scope.showDetails = function(id,titre){
 
 })
 
-.controller('tabHistoricController', function ($scope, ordersHistoryFactory, ionicDatePicker) {
+.controller('tabHistoricController', function ($scope, ordersHistoryFactory, ionicDatePicker,$timeout) {
 
   $scope.refresh = function () {
     console.log('Refreshing Historic!');

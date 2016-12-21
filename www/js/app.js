@@ -68,14 +68,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','a
 
   .state('tab.historic', {
       url: '/tabhistoric',
-      controller: 'tabHistoricController',
-      templateUrl: 'templates/tab-historic.html'
+      views:{
+        'tab-historic':{
+          templateUrl: 'templates/tab-historic.html',
+          controller: 'tabHistoricController'
+        }
+      }
+
   });
 
   // if none of the above states are matched, use this as the fallback
 
       	 $urlRouterProvider.otherwise('/login');
-
-
 
 });

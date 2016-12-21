@@ -74,7 +74,20 @@ angular.module('starter.services', [])
   }
 
   factory.getOrdersByDate = function (date) {
-    return ["Commande 1 " + date, "Commande 2 " + date, "Commande 3 " + date, "Commande 4 " + date];
+    var ordersbydate = [{
+      id: 0,
+      name: 'Commande 1'+date
+    }, {
+      id: 1,
+      name: 'Commande 2'+date
+    }, {
+      id: 2,
+      name: 'Commande 3'+date
+    }, {
+      id: 3,
+      name: 'Commande 4'+date
+    }];
+    return ordersbydate;
   }
 
   return factory;
