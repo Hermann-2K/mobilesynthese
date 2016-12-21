@@ -1,0 +1,39 @@
+<!--DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>-->
+<ion-view view-title="Connexion" >
+
+  <ion-content  class="padding">
+
+    <div class="list">
+      <img src="img/userlogo8.png" class="logo">
+      <div class="logoText">
+        Connexion
+      </div>
+    </div>
+    <div class="list card padding">
+      <label class="item item-input item-floating-label">
+        <span class="input-label me">Username</span>
+        <input type="text" class="me" placeholder="username" ng-model="data.username" required>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label me">Password</span>
+        <input type="password" class="me" placeholder="password" ng-model="data.password" required>
+      </label>
+      <button ng-click="login()" ng-disabled="!data.password||!data.username" class="button button-block button-positive ">
+        Se connecter
+      </button>
+    </div>
+    <!--<div class="list" style="text-align:center">
+      <button ng-click="modal.show()" class="button button-small button-outline icon-left ion-person-add button-positive">
+        Create New Account
+      </button>
+    </div>-->
+  </ion-content>
+</ion-view>
+<!--</body>
+</html>-->

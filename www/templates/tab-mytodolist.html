@@ -1,0 +1,27 @@
+<ion-view view-title="ToDoList">
+  <ion-content >
+    <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+    <ion-list >
+      <div ng-repeat="(key, value) in taches | groupBy: 'date' ">
+      <ion-item class="item-divider dark-bg light" >{{ key }}</ion-item>
+
+        <div class="card" ng-repeat="tache in value"  ng-hide="tache.IsVisible">
+
+            <div class="item item-divider positive" ng-click="showDetails(tache.id,tache.titre)">
+              {{tache.titre}}
+            </div>
+            <div class="item item-text-wrap">
+              <p>
+                {{tache.description}}
+              </p>
+            </div>
+          <div class="item item-divider">
+            <button class="button button-small button-balanced" ng-click="hideTask(tache.id)">
+               Effectuée
+            </button>
+          </div>
+      </div>
+    </div>
+    </ion-list>
+  </ion-content>
+</ion-view>
