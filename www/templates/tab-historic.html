@@ -1,9 +1,9 @@
 <ion-view view-title="Historique des commandes">
   <ion-content >
     <ion-refresher on-refresh="refresh()"></ion-refresher>
-    <ion-nav-buttons side="right">
+
     <button class="button icon ion-android-calendar" ng-click="openDatePicker()"></button>
-  </ion-nav-buttons>
+
   <ion-list>
     <ion-item ng-repeat="order in orders">
       {{order.name}}
