@@ -9,7 +9,7 @@ angular.module('starter.controllers', [])
   })
 
   .controller('LoginCtrl', function($scope,$http,$ionicPopup,$state) {
-    localStorage.removeItem("idchauffeur");
+  //  localStorage.removeItem("idchauffeur");
     if(localStorage.getItem("idchauffeur")!=undefined)
       {// on se positionne sur le compte du chauffeur s'il avait déjà eu à se connecter
         $state.go('tab.dash');
@@ -17,15 +17,34 @@ angular.module('starter.controllers', [])
 
     $scope.data = {};
     $scope.url = "http://localhost:8100/#/test.txt";
-
-
+    var result={
+    "response": {
+    "code": "SUCC",
+    "message": "description de l'erreur "
+    },
+    "data": {
+    "code": 200,
+    "idchauffeur": 2620578,
+    "nom": "nomchauffeur",
+    "prenom": "prenomchauffeur"
+     }
+    }
+    
     $scope.login = function () {
+      $scope.token=result.data.idchauffeur;
+
+      localStorage.setItem("idchauffeur",$scope.token);
+      //page du chauffeur
+      $state.go('tab.dash');
+
+
+
       //console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
 //;$http.post('/someUrl', data, config).then(successCallback, errorCallback);
       // on associe les paramètres à l'url
 
       //l'on fait une requête ajax au serveur de ndjama avec les paramètres username et password
-      $http.post($scope.url, $scope.data).success(function (result) {
+    /*  $http.post($scope.url, $scope.data).success(function (result) {
          //console.log($scope.data);
          result={
         "response": {
@@ -85,7 +104,7 @@ angular.module('starter.controllers', [])
               title: 'Connexion echouée!',
               template: response.erreur.message
             });
-          }*/
+          }
 
         }
       )
@@ -96,7 +115,7 @@ angular.module('starter.controllers', [])
             template: 'Please check your credentials!'
           });
 
-        })
+        })*/
     }
   })
 
