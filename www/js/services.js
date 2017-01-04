@@ -49,24 +49,42 @@ angular.module('starter.services', [])
   };
 })
 
-.factory('ordersHistoryFactory', function () {
+.factory('ordersHistoryFactory', function ($http) {
   var factory = {};
 
   factory.getAllOrders = function () {
-    var orders = [{
-      id: 0,
-      name: 'Commande 1'
+    /*var orders = [{
+      _id: 0,
+      name: 'Commande 1',
+      updated_at: "2016-12-20 03:24:39",
+      created_at: "2016-12-20 03:24:39"
     }, {
-      id: 1,
-      name: 'Commande 2'
+      _id: 1,
+      name: 'Commande 2',
+      updated_at: "2016-12-20 03:24:39",
+      created_at: "2016-12-20 03:24:39"
     }, {
-      id: 2,
-      name: 'Commande 3'
+      _id: 2,
+      name: 'Commande 3',
+      updated_at: "2016-12-20 03:24:39",
+      created_at: "2016-12-20 03:24:39"
     }, {
-      id: 3,
-      name: 'Commande 4'
-    }];
-    return orders;
+      _id: 3,
+      name: 'Commande 4',
+      updated_at: "2016-12-20 03:24:39",
+      created_at: "2016-12-20 03:24:39"
+    }];*/
+    var promise = $http.get("http://projetsynthese.herokuapp.com/api/livraisons").then(function (response) {
+      console.log(response);
+      orders = response.data;
+      for(i = 0; i < orders.length; i++) {
+        var theDate = new Date(Date.parse(orders[i].created_at));
+        orders[i].readableDate = theDate.toDateString();
+      }
+      return orders;
+    })
+
+    return promise;
   }
 
   factory.getLastNOrders = function (N) {
@@ -74,20 +92,47 @@ angular.module('starter.services', [])
   }
 
   factory.getOrdersByDate = function (date) {
-    var ordersbydate = [{
-      id: 0,
-      name: 'Commande 1'+date
+    /*console.log(date);
+    console.log(date.toDateString())*/
+    var ordersByDate = [];
+    /*var orders = [{
+      _id: 0,
+      name: 'Commande 1',
+      updated_at: "2016-12-20 03:24:39",
+      created_at: "2016-12-20 03:24:39"
     }, {
-      id: 1,
-      name: 'Commande 2'+date
+      _id: 1,
+      name: 'Commande 2',
+      updated_at: "2016-12-20 03:24:39",
+      created_at: "2016-12-20 03:24:39"
     }, {
-      id: 2,
-      name: 'Commande 3'+date
+      _id: 2,
+      name: 'Commande 3',
+      updated_at: "2016-12-20 03:24:39",
+      created_at: "2016-12-20 03:24:39"
     }, {
-      id: 3,
-      name: 'Commande 4'+date
-    }];
-    return ordersbydate;
+      _id: 3,
+      name: 'Commande 4',
+      updated_at: "2016-12-20 03:24:39",
+      created_at: "2016-12-20 03:24:39"
+    }];*/
+    var promise = $http.get("http://projetsynthese.herokuapp.com/api/livraisons").then(function (response) {
+      console.log(response);
+      orders = response.data;
+      for(i = 0; i < orders.length; i++) {
+        var currentDate = new Date(Date.parse(orders[i].created_at));
+        /*console.log(currentDate);
+         console.log(currentDate.toDateString());
+         console.log(date.toDateString());*/
+        if(currentDate.toDateString()== date.toDateString()) {
+          orders[i].readableDate = currentDate.toDateString();
+          ordersByDate.push(orders[i]);
+        }
+      }
+      return ordersByDate;
+    })
+
+    return promise;
   }
 
   return factory;
