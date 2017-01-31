@@ -246,4 +246,84 @@ $scope.showDetails = function(id,titre){
   });
   console.log($scope.orders);
 
+})
+
+
+
+.controller('DashCtrl',function($ionicLoading,$scope,$http){
+
+ // Les  valeurs test
+
+ var pointJson = [
+        {"longitude":11.562847, "lattitude":3.843363 , "description": "livrer 1000 bouteilles", "icone": "img/marqueur.png", "_id":153 , "name": "nom 4", "localisation":"yaounde point 1" ,"ordre": 4 , "updated_at": "" , "created_at": ""},
+        {"longitude":11.537947, "lattitude": 3.849799 , "description": "2000 bouteilles", "icone": "img/marqueur.png", "_id":35 , "name": "nom 1", "localisation":"yaounde point 2" ,"ordre": 1 , "updated_at": "" , "created_at": ""},
+        {"longitude":11.514343 , "lattitude": 3.871974 , "description": "point numero 3", "icone": "img/marqueur.png", "_id":96 , "name": "nom 3", "localisation":"yaounde point 3" ,"ordre": 3 , "updated_at": "" , "created_at": ""},
+        {"longitude":11.500155, "lattitude": 3.86258, "description": "point numero 4", "icone":"img/marqueur.png", "_id":79 , "name": "nom 2", "localisation":"yaounde point 4" ,"ordre": 5 , "updated_at": "" , "created_at": ""},
+        {"longitude":11.600455, "lattitude":3.86358, "description": "point numero 5", "icone":"img/marqueur.png", "_id":58 , "name": "nom 5", "localisation":"yaounde point 5" ,"ordre": 2 , "updated_at": "" , "created_at": ""}
+      ];
+
+
+
+
+
+$ionicLoading.show({
+    template:"chargement ...."
 });
+var url="https://projetsynthese.herokuapp.com/api/pointlivraisons";
+
+  $http.get(url).success(function(response){
+    $ionicLoading.hide();
+    pointJson=response;
+
+// Recuperation de la liste des points
+var point={};
+var listedepoints = [];
+var tableau_liens=[];
+var temp={"id":5,ordre:"1","lon": 10.6075669, "lat": 4.9459301, "description": "point numero 5", "icone":"img/marqueur.png"};
+var temp_liens=[{"lon": 11.52, "lat":3.83  }, {"lon":14.52 , "lat": 4.0}];
+
+for(var i=0; i < pointJson.length;i++){
+  //point=pointJson[i]
+  for(var j=0;j<pointJson.length;j++){
+    if(pointJson[j].ordre==i+1)
+    {
+      point= pointJson[j];
+      j=pointJson.length;
+    }
+  }
+
+  temp= new Object();
+  temp={"id":5,ordre:"1","lon": 10.6075669, "lat": 4.9459301, "description": "point numero 5", "icone":"img/marqueur.png"};
+  //temp.lon=point.longitude;
+  //temp.lat=point.lattitude;
+  temp.lat=point.longitude;
+  temp.lon=point.lattitude;
+  temp.description ='('+point.name+')'+''+point.description;
+  temp.icone="img/marqueur.png";
+  temp.id=point._id;
+  temp.ordre=point.ordre;
+
+  listedepoints.push(temp);
+}
+
+// Inserer les points dans un tableau des liens
+for(var i=0; i < listedepoints.length-1;i++){
+
+  temp_liens = new Object();
+  temp_liens=[];
+
+  temp_liens.push(listedepoints[i]);
+  temp_liens.push(listedepoints[i+1]);
+  tableau_liens.push(temp_liens);
+}
+
+  console.log(tableau_liens);
+  console.log('Nombre de tableau de lien '+tableau_liens.length);
+  var map = creerCarte("monmap");
+  ajouterPoints(map,listedepoints);
+  localiserPoints(map,listedepoints);
+  relierPoints(map, tableau_liens);
+  afficherCarte(map, listedepoints[2], 13);
+  })
+
+})
