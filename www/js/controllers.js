@@ -29,7 +29,7 @@ angular.module('starter.controllers', [])
     "prenom": "prenomchauffeur"
      }
     }
-    
+
     $scope.login = function () {
       $scope.token=result.data.idchauffeur;
 
@@ -224,7 +224,9 @@ $scope.showDetails = function(id,titre){
   var ipObj1 = {
     callback: function (val) {  //Mandatory
       console.log('Return value from the datepicker popup is : ' + val, new Date(val));
-      $scope.orders = ordersHistoryFactory.getOrdersByDate(new Date(val));
+      ordersHistoryFactory.getOrdersByDate(new Date(val)).then(function (data) {
+        $scope.orders = data;
+      });
     },
     disabledDates: [            //Optional
     ],
@@ -237,7 +239,11 @@ $scope.showDetails = function(id,titre){
     ionicDatePicker.openDatePicker(ipObj1);
   };
 
-  $scope.orders = ordersHistoryFactory.getAllOrders();
+  ordersHistoryFactory.getAllOrders().then(function (data) {
+    console.log("rei");
+    console.log(data);
+    $scope.orders = data;
+  });
   console.log($scope.orders);
 
 });
