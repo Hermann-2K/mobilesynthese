@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<title>Rendu graphique géographique - GI2017 - projet synthèse</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+			<!-- <script src="http://openlayers.org/api/OpenLayers.js"></script> -->
+		<script src="OpenLayers.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtI27a1YTnxlqeSOlw6-eYZJbC6Ap-Dho&libraries=geometry&sensor=false"></script>
+	</head>
+    <body onload1="creerCarte('map')">
+	<!-- <body onload="ajouterPoints(creerCarte('map'),[])"> -->
+	  	<div style="width:90%; height:90%" id="map" style="border:5px, solid, red !important"></div>
+	  	<div style="width:80%; height:80%" id="resultMap" style="border:5px, solid, red !important"></div>
+	
+		<script type="text/javascript" src="api.js"></script>
+		<script type="text/javascript">
+
+			var listedepoints = [
+				{"lon": 11.52, "lat":3.83 , "description": "point numero 1", "icone": "img/marqueur.png"},
+				{"lon":14.52 , "lat": 4.0, "description": "point numero 2", "icone": "img/marqueur.png"}, 
+				{"lon": 13.62, "lat": 3.83 , "description": "point numero 3", "icone": "img/marqueur.png"},
+				{"lon": 9.5382032, "lat": 4.9899851, "description": "point numero 4", "icone":"img/marqueur.png"},
+				{"lon": 10.6075669, "lat": 4.9459301, "description": "point numero 5", "icone":"img/marqueur.png"}
+			];
+			 //console.log(creerCarte('map').render('resultMap'));
+			 var map = ajouterPoints(creerCarte('map'),listedepoints);
+			 //map.render("map");
+
+			//representerPolygone(map, listedepoints);
+			afficherCarte(map,listedepoints[0],7);
+			tableau_liens = [
+				[{"lon": 11.52, "lat":3.83  }, {"lon":14.52 , "lat": 4.0}],
+				[{"lon": 11.52, "lat":3.83  }, {"lon": 10.6075669, "lat": 4.9459301}],
+				[{"lon" : 10.6075669, "lat": 4.9459301 }, {"lon":14.52 , "lat": 4.0 }]
+			];
+			relierPoints(map, tableau_liens);
+			
+
+		</script>
+	</body>
+
+	
+</html>
