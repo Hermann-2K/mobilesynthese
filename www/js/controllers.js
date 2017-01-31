@@ -9,59 +9,48 @@ angular.module('starter.controllers', [])
   })
 
   .controller('LoginCtrl', function($scope,$http,$ionicPopup,$state) {
-  //  localStorage.removeItem("idchauffeur");
-    if(localStorage.getItem("idchauffeur")!=undefined)
+   /*localStorage.removeItem("idchauffeur");*/
+     $scope.data={};
+      $scope.url = "http://projetsynthese.herokuapp.com/api/auth/login";
+	  
+	   if(localStorage.getItem("idchauffeur")!=" ")
       {// on se positionne sur le compte du chauffeur s'il avait déjà eu à se connecter
         $state.go('tab.dash');
       }
 
-    $scope.data = {};
-    $scope.url = "http://localhost:8100/#/test.txt";
-    var result={
-    "response": {
-    "code": "SUCC",
-    "message": "description de l'erreur "
-    },
-    "data": {
-    "code": 200,
-    "idchauffeur": 2620578,
-    "nom": "nomchauffeur",
-    "prenom": "prenomchauffeur"
-     }
-    }
-    
-    $scope.login = function () {
-      $scope.token=result.data.idchauffeur;
-
-      localStorage.setItem("idchauffeur",$scope.token);
-      //page du chauffeur
-      $state.go('tab.dash');
+    $scope.login=function(){
+		
+   /* if(localStorage.getItem("idchauffeur")!=" ")
+      {// on se positionne sur le compte du chauffeur s'il avait déjà eu à se connecter
+        $state.go('tab.dash');
+      }*/
 
 
 
-      //console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
-//;$http.post('/someUrl', data, config).then(successCallback, errorCallback);
-      // on associe les paramètres à l'url
+console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
+   //console.log($scope.data);
+   
+var donnee ={
+				"username": $scope.data.username,
+               "password": $scope.data.password
+             };
 
-      //l'on fait une requête ajax au serveur de ndjama avec les paramètres username et password
-    /*  $http.post($scope.url, $scope.data).success(function (result) {
+              var config = {
+                headers : {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
+
+            
+$http.post($scope.url, donnee)
+.success(function (result) {
          //console.log($scope.data);
-         result={
-        "response": {
-        "code": "SUCC",
-        "message": "description de l'erreur "
-      },
-      "data": {
-      "code": 200,
-      "idchauffeur": 2620578,
-      "nom": "nomchauffeur",
-      "prenom": "prenomchauffeur"
-          }
-      }
+         //console.log(result);
          // on teste le resultat renvoyé
          //1er cas : si c'est une erreur
+		 
 
-         if(result.response.code=="ERR")
+       /*  if(result.response.code=="ERR")
     {
       var alertPopup = $ionicPopup.alert({
               title: 'Connexion echouée!',
@@ -69,55 +58,27 @@ angular.module('starter.controllers', [])
             });
      }
      else
-     {
+     {*/
       // on stocke l'id du chauffeur
-      $scope.token=result.data.idchauffeur;
+      $scope.token=result.token;
      // console.log($scope.token);
       localStorage.setItem("idchauffeur",$scope.token);
             //page du chauffeur
             $state.go('tab.dash');
-     }
-          //$state.go('tab.dash');
-         /* response={
-            "data": {
-              "code": 200,
-              "idchauffeur": 2620578,
-              "nom": "nomchauffeur",
-              "prenom": "prenomchauffeur",
-
-
-            }
-          };
-          if("data" in response)
-          {
-            // on doit enregistrer l'id du chauffeur dans un  token
-            $scope.token=response.data.idchauffeur;
-            console.log($scope.token);
-            localStorage.setItem("idchauffeur",$scope.token);
-            //page du chauffeur
-            $state.go('tab.dash');
-          }
-          else
-          if("erreur" in response)
-          {
-            var alertPopup = $ionicPopup.alert({
-              title: 'Connexion echouée!',
-              template: response.erreur.message
-            });
-          }
-
-        }
-      )
+     })
+       
         .error(function () {
 
           var alertPopup = $ionicPopup.alert({
             title: 'Connexion echouée!',
-            template: 'Please check your credentials!'
+            template: 'Vérifier !'
           });
 
-        })*/
-    }
-  })
+        });
+
+
+   } }
+  )
 
   .controller('AccountCtrl', function($scope,$ionicModal) {
   $scope.settings = {
